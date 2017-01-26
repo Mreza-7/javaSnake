@@ -1,4 +1,4 @@
-# javaSnake
+# SnakeJS
 It's an openSource javaScript Library.
 # But...!
 Everyone that they wanna use this project in business,
