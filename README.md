@@ -13,4 +13,4 @@ and sometimes, no ...
 
 It's better to use these libraries together.
 
-Use SnakeJS [wiki](https://github.com/smrsan76/SnakeJS/wiki)
+Use SnakeJS [wiki](https://github.com/smrsan76/SnakeJS/wiki) to know more about usage of it.
