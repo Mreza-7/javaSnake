@@ -1205,7 +1205,7 @@ var javaSnake = (function(slct, index){
 			if(useCapture === undefined){ useCapture = false; }
 			for(var i=0; i<this.length; i++){ window.javaSnake.addEvent(func, "abort", this[i], useCapture); }
 			return S; /*Continue Developing !!!*/
-		} },
+		},
 		_onBlur_ = function (func, useCapture){
 			if(useCapture === undefined){ useCapture = false; }
 			for(var i=0; i<this.length; i++){ window.javaSnake.addEvent(func, "blur", this[i], useCapture); }
