@@ -170,7 +170,7 @@ var jSnake = (function(slct, index){
 					return {
 						creator          : "SMRSAN",
 						webLog           : "http://smrsan.blogfa.com/",
-						webSite          : ["http://www.javaSnake.com/","http:/www.javaSnake.org/","http://www.javaSnake.ir/"],
+						webSite          : ["http://www.javaSnake.com/","http://www.javaSnake.org/","http://www.javaSnake.ir/"],
 						version          : "v1.0.0",
 						firstPublishYear : "1395 | 2016",
 						publishYear      : "1396 | 2017"
@@ -681,28 +681,41 @@ var jSnake = (function(slct, index){
 				this[i].parentElement.removeChild(this[i]);
 			}
 		};
-		S.appendChild = function (element,pushFlag){
+		S.appendChild = function (element,dontCopy,pushFlag){
 		/*
 		 *	Function For AppendChild To Selected Elements
 		 */
 			
 			var appendedChilds = [];
+			dontCopy = (dontCopy === undefined)? false:dontCopy;
 			
 			switch(typeof element){
 				case 'object':
-					for(var i=0; i<this.length; i++){
-						var copy = element.cloneNode(true);
-						this[i].appendChild(copy);
-						appendedChilds.push(copy);
-					}
+				    if(!dontCopy) {//Use cloneNode
+                        for (var i = 0; i < this.length; i++) {
+                            var copy = element.cloneNode(true);
+                            this[i].appendChild(copy);
+                            appendedChilds.push(copy);
+                        }
+                    } else {//Do Not Use cloneNode
+				        this[0].appendChild(element);
+				        appendedChilds.push(element);
+                    }
 				break;
 				case 'array':
 					for(var j=0; j<element.length; j++){
-						for(var i=0; i<this.length; i++){
-							var copy = element[j].cloneNode(true);
-							this[i].appendChild(copy);
-							appendedChilds.push(copy);
-						}
+
+                        if(!dontCopy) {//Use cloneNode
+                            for (var i = 0; i < this.length; i++) {
+                                var copy = element[j].cloneNode(true);
+                                this[i].appendChild(copy);
+                                appendedChilds.push(copy);
+                            }
+                        } else {//Do Not Use cloneNode
+                            this[0].appendChild(element[j]);
+                            appendedChilds.push(element[j]);
+                        }
+
 					}
 				break;
 			}
@@ -1103,7 +1116,7 @@ var jSnake = (function(slct, index){
 					//for(var i=0; i<S.length; i++){ S[i].f = null }
 				} else {
 					
-					throw Error("javaSnake_S: Enter Function Value In each Function !");
+					throw Error("javaSnake: Enter Function Value In each Function !");
 					
 				}
 			}
@@ -2481,7 +2494,8 @@ var jSnake = (function(slct, index){
 					
 				} catch(e) {
 					
-					return "A newer browser is needed !";
+					//return "A newer browser is needed !";
+					throw Error("A newer browser is needed !");
 					
 				}
 				
@@ -4183,7 +4197,7 @@ window.jSnake.cssUnitConvert = function(num,unit1,unit2){
 		break;
 	}
 	return num;
-}
+};
 /*
  *	( Animation ToolBox )
  */
@@ -4290,7 +4304,38 @@ window.jSnake.anim = {
 	//[END] Types of delta
 	
 };
+window.jSnake.getViewportSize = function(){
 
+    //Thanks to http://stackoverflow.com/users/227532/leo
+    var viewPortWidth;
+    var viewPortHeight;
+
+    // the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
+    if (typeof window.innerWidth != 'undefined') {
+
+        viewPortWidth = window.innerWidth;
+        viewPortHeight = window.innerHeight;
+
+    }
+    // IE6 in standards compliant mode (i.e. with a valid doctype as the first line in the document)
+    else if (typeof document.documentElement != 'undefined'
+            && typeof document.documentElement.clientWidth != 'undefined'
+            && document.documentElement.clientWidth != 0) {
+
+        viewPortWidth = document.documentElement.clientWidth;
+        viewPortHeight = document.documentElement.clientHeight;
+
+    }
+    // older versions of IE
+    else {
+
+        viewPortWidth = document.getElementsByTagName('body')[0].clientWidth;
+        viewPortHeight = document.getElementsByTagName('body')[0].clientHeight;
+
+    }
+    return [viewPortWidth, viewPortHeight];
+
+};
 //End Of javaSnake In Object Mode
 ////////////////////////////////////////////
 ////////////////////////////////////////////
