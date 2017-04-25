@@ -3912,9 +3912,25 @@ window.jSnake.onScrollArrivesOnce = function(element,func,before){
 };
 window.jSnake.realStyle = function(element, property, pseudoElt){
 	
-	if(pseudoElt === undefined) pseudoElt = null;
-	
-	return window.getComputedStyle(element,pseudoElt).getPropertyValue(property);
+	//if(pseudoElt === undefined) pseudoElt = null;
+
+	if(window.getComputedStyle(element, pseudoElt)[property]){
+
+	    return window.getComputedStyle(element, pseudoElt)[property];
+
+    } else if(window.getComputedStyle(element, pseudoElt).getPropertyValue) {
+
+        return window.getComputedStyle(element, pseudoElt).getPropertyValue(property);
+
+    } else if(element.currentStyle){
+
+        return element.currentStyle[property];
+
+    } else {
+
+        return element.style[property];
+
+    }
 	
 };
 //Main Variables In javaSnake (Object Mode)
